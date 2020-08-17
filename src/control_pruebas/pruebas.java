@@ -62,10 +62,11 @@ class pruebas {
 	 * retorne el valor correspondiente para cada uno y de esta manera se verifica
 	 * el valor adecuado para cada uno de ellos y tambien para el funcionamiento
 	 * correcto del programa
+	 * @throws EmpleadoException 
 	 */
 	
 	@Test
-	void calcularNomina () {
+	void calcularNomina () throws EmpleadoException {
 	EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
 	EntityManager gestorBD = fabrica.createEntityManager();
 	Empleado empleadoBuscado1 = gestorBD.find(Empleado.class, "123456789");

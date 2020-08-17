@@ -6,6 +6,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
+import control.EmpleadoException;
+
 /**
  * @version1.0
  * @author Cristian David Guerrero - Andres Felipe Castrillon - Juan Jose Paz
@@ -41,7 +43,7 @@ public abstract class Empleado {
 	 *  metodo que nos retorna el valor de la nomina para cada uno de los distintos tipos de empleados
 	 * @return nos retorna el valor de la nomina dependiendo de cada una de sus implementaciones posteriores.
 	 */
-	public abstract float calcularNomina();
+	public abstract float calcularNomina() throws EmpleadoException;
 
 	public String getIdentificador() {
 		return identificador;

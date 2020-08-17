@@ -73,14 +73,27 @@ public class ClaseControl {
 	 * Busca un empleado entre los que ya estan registrados, por su identificacion
 	 *@return el objeto empleado con la identificación dada, o null si no se encuentra
 	 */
-	public Empleado buscarEmpleado(String identificador) {
+	public Empleado buscarEmpleado(String identificador){
 		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
 		EntityManager gestorBD = fabrica.createEntityManager();
 
 		Empleado empleadoBuscado = gestorBD.find(Empleado.class, identificador);
 		gestorBD.close();
-		
+
 		return empleadoBuscado;
 	}
+	
+	public float calcularNomina(String identificador) {
+		float nomina = 0;
+		Empleado empleadoBuscado = buscarEmpleado(identificador);
+		try {
+			nomina = empleadoBuscado.calcularNomina();
+		}catch(EmpleadoException e) {
+			System.out.println("Imposible calcular la nomina, el empleado no existe");
+		}
+		return nomina;	
+		
+	}
+	
 	
 }

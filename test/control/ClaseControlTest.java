@@ -27,11 +27,8 @@ class ClaseControlTest {
 	
 	@Test
 	void calcularSinEmpleado() throws EmpleadoException{
-		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
-		EntityManager gestorBD = fabrica.createEntityManager();
-		Empleado empleadoBuscado= gestorBD.find(Empleado.class, "15");
-		gestorBD.close();
-		assertThrows(Exception.class, ()-> empleadoBuscado.calcularNomina());
+		ClaseControl control = new ClaseControl();
+		assertThrows(Exception.class, ()-> control.calcularNomina("15"));
 	}
 		
 	/**
@@ -44,12 +41,10 @@ class ClaseControlTest {
 	
 	@Test
 	void consultaTipoEmpleados () {
-	EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
-	EntityManager gestorBD = fabrica.createEntityManager();
-	Empleado empleadoBuscado1 = gestorBD.find(Empleado.class, "123456789");
-	Empleado empleadoBuscado2 = gestorBD.find(Empleado.class, "1");
-	Empleado empleadoBuscado3 = gestorBD.find(Empleado.class, "2");
-	gestorBD.close();
+	ClaseControl control = new ClaseControl();
+	Empleado empleadoBuscado1 = control.buscarEmpleado("123456789");
+	Empleado empleadoBuscado2 = control.buscarEmpleado("1");
+	Empleado empleadoBuscado3 = control.buscarEmpleado("2");
 	assertEquals("Juan Paz", empleadoBuscado1.getNombre());
 	assertEquals("Cristian Guerrero", empleadoBuscado2.getNombre());
 	assertEquals("Andres Castrillon", empleadoBuscado3.getNombre());
@@ -60,16 +55,15 @@ class ClaseControlTest {
 	 * retorne el valor correspondiente para cada uno y de esta manera se verifica
 	 * el valor adecuado para cada uno de ellos y tambien para el funcionamiento
 	 * correcto del programa
+	 * @throws EmpleadoException 
 	 */
 	
 	@Test
-	void calcularNomina () {
-	EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
-	EntityManager gestorBD = fabrica.createEntityManager();
-	Empleado empleadoBuscado1 = gestorBD.find(Empleado.class, "123456789");
-	Empleado empleadoBuscado2 = gestorBD.find(Empleado.class, "1");
-	Empleado empleadoBuscado3 = gestorBD.find(Empleado.class, "2");
-	gestorBD.close();
+	void calcularNomina () throws EmpleadoException {
+	ClaseControl control = new ClaseControl();
+	Empleado empleadoBuscado1 = control.buscarEmpleado("123456789");
+	Empleado empleadoBuscado2 = control.buscarEmpleado("1");
+	Empleado empleadoBuscado3 = control.buscarEmpleado("2");
 	assertEquals(10000000.0, empleadoBuscado1.calcularNomina());
 	assertEquals(760000.0, empleadoBuscado2.calcularNomina());
 	assertEquals(30002.650390625, empleadoBuscado3.calcularNomina());
