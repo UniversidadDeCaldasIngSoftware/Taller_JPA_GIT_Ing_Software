@@ -30,6 +30,15 @@ class ClaseControlTest {
 		ClaseControl control = new ClaseControl();
 		assertThrows(Exception.class, ()-> control.calcularSalarioEmpleado("15"));
 	}
+	
+	@Test
+	void calcularNominaSinEmpleado () throws EmpleadoException {
+	ClaseControl control = new ClaseControl();
+	double nomina = control.calcularNomina();
+	double nominaEsperada = 0.0;
+	assertEquals(nominaEsperada,nomina);
+	System.out.println("sin empleado: " + nomina);
+	}
 		
 	/**
 	 * Consulta en la cual se crean los 3 tipos de empleados y se ingresan cada

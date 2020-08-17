@@ -14,18 +14,27 @@ public class PruebaControl {
 	public static void main(String[] args) {
 		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
 		EntityManager gestorBD = fabrica.createEntityManager();
-		gestorBD.getTransaction().begin();
-		Empleado empleado = new EmpleadoAsalariado("Juan Paz","123456789", 10000000);
-		gestorBD.persist(empleado);
 		
-		Empleado empleado2 = new EmpleadoPorHoras("Cristian Guerrero","1", 10000,56);
-		gestorBD.persist(empleado2);
+		ClaseControl control = new ClaseControl();
 	
-		Empleado empleado3 = new EmpleadoPorComision("Andres Castrillon","2", 30000,530000);
-		gestorBD.persist(empleado3);
+		
+		gestorBD.getTransaction().begin();
+		Empleado empleado = control.buscarEmpleado("123456789");
+		if(!gestorBD.contains(empleado)) {
+			empleado = gestorBD.merge(empleado);
+		}
+		gestorBD.remove(empleado);
+		Empleado empleado2 = control.buscarEmpleado("1");
+		if(!gestorBD.contains(empleado2)) {
+			empleado2 = gestorBD.merge(empleado2);
+		}
+		gestorBD.remove(empleado2);
+		Empleado empleado3 = control.buscarEmpleado("2");
+		if(!gestorBD.contains(empleado3)) {
+			empleado3 = gestorBD.merge(empleado3);
+		}
+		gestorBD.remove(empleado3);
 		gestorBD.getTransaction().commit();
-		Empleado empleadoBuscado = gestorBD.find(Empleado.class, "123456789");
-		System.out.println(empleadoBuscado.getNombre());
 		gestorBD.close();
 	}
 
