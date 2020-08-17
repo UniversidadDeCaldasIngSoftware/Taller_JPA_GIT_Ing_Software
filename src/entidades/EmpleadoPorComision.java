@@ -36,7 +36,7 @@ public class EmpleadoPorComision extends Empleado {
 	
 	
 	@Override
-	public float calcularNomina() {
+	public float calcularSalario() {
 		return (float) (this.salarioBaseSemanal+(this.totalVentasRealizadas*0.05));
 	}
 

@@ -28,7 +28,7 @@ class ClaseControlTest {
 	@Test
 	void calcularSinEmpleado() throws EmpleadoException{
 		ClaseControl control = new ClaseControl();
-		assertThrows(Exception.class, ()-> control.calcularNomina("15"));
+		assertThrows(Exception.class, ()-> control.calcularSalarioEmpleado("15"));
 	}
 		
 	/**
@@ -51,22 +51,32 @@ class ClaseControlTest {
 	}
 	
 	/**
-	 * Se crea una prueba en la cual se calcula que su metodo de calcularNomina 
-	 * retorne el valor correspondiente para cada uno y de esta manera se verifica
-	 * el valor adecuado para cada uno de ellos y tambien para el funcionamiento
-	 * correcto del programa
+	 * Pruba para calcula la nomina que se debe pagar esa semana
 	 * @throws EmpleadoException 
 	 */
 	
 	@Test
 	void calcularNomina () throws EmpleadoException {
 	ClaseControl control = new ClaseControl();
-	Empleado empleadoBuscado1 = control.buscarEmpleado("123456789");
-	Empleado empleadoBuscado2 = control.buscarEmpleado("1");
-	Empleado empleadoBuscado3 = control.buscarEmpleado("2");
-	assertEquals(10000000.0, empleadoBuscado1.calcularNomina());
-	assertEquals(760000.0, empleadoBuscado2.calcularNomina());
-	assertEquals(30002.650390625, empleadoBuscado3.calcularNomina());
+	double nomina = control.calcularNomina();
+	System.out.println(nomina);
+	}
+	
+	
+	/**
+	 * prueba para calcular el salario de un empleado especificado
+	 * @throws EmpleadoException 
+	 */
+	
+	@Test
+	void calcularSalarioDeUnEmpleado () throws EmpleadoException {
+	ClaseControl control = new ClaseControl();
+	float salario = control.calcularSalarioEmpleado("123456789");
+	float salarioEsperado = (float) 10000000.0;
+	System.out.println(control.calcularSalarioEmpleado("1"));
+	System.out.println(control.calcularSalarioEmpleado("2"));
+	assertEquals(salarioEsperado, salario);
+	
 	}
 	
 }

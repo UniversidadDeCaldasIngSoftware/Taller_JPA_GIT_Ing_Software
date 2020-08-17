@@ -35,7 +35,7 @@ public class EmpleadoPorHoras extends Empleado {
 		
 		
 		@Override
-		public float calcularNomina() {
+		public float calcularSalario() {
 			float total_salario = 0;
 			total_salario = this.valorHora * this.horasTrabajadas;
 			if	(this.horasTrabajadas > HORAS_BONO) {

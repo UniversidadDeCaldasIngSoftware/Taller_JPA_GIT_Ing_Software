@@ -1,7 +1,12 @@
 package control;
 
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import entidades.Empleado;
@@ -83,17 +88,42 @@ public class ClaseControl {
 		return empleadoBuscado;
 	}
 	
-	public float calcularNomina(String identificador) {
-		float nomina = 0;
+	public float calcularSalarioEmpleado(String identificador) {
+		float salario = 0;
 		Empleado empleadoBuscado = buscarEmpleado(identificador);
 		try {
-			nomina = empleadoBuscado.calcularNomina();
+			salario = empleadoBuscado.calcularSalario();
 		}catch(EmpleadoException e) {
-			System.out.println("Imposible calcular la nomina, el empleado no existe");
+			System.out.println("Imposible calcular el salario, el empleado no existe");
 		}
-		return nomina;	
+		return salario;	
 		
 	}
 	
+	
+	/**
+	 * Extraer los empleados del repositorio y calcula la nomina que se debe pagar
+	 *@return nomina retorna la nomina
+	 */
+
+	public double calcularNomina() throws EmpleadoException {
+		double resultado, parteEntera = 0;
+		List<Empleado> listaEmpleados = repositorioEmpleados.consultarEmpleados();
+		
+		double nomina = 0;
+		try {
+			for(int i=0; i < listaEmpleados.size(); i++) {
+				nomina += listaEmpleados.get(i).calcularSalario();
+			}
+		}catch(EmpleadoException e) {
+			System.out.println("Ocurrio un error al calcular el salario");
+		}
+		
+        parteEntera = Math.floor(nomina);
+        nomina=(nomina-parteEntera)*Math.pow(10, 6);
+        nomina=Math.round(nomina);
+        resultado=(nomina/Math.pow(10, 6))+ parteEntera;
+		return nomina;
+	}
 	
 }

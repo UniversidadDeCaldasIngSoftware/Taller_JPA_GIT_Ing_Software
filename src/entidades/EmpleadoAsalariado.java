@@ -34,7 +34,7 @@ public class EmpleadoAsalariado extends Empleado {
 	}
 	
 	@Override
-	public float calcularNomina() {
+	public float calcularSalario() {
 		
 		return this.salarioSemanal;
 	}

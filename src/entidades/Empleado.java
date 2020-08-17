@@ -43,7 +43,7 @@ public abstract class Empleado {
 	 *  metodo que nos retorna el valor de la nomina para cada uno de los distintos tipos de empleados
 	 * @return nos retorna el valor de la nomina dependiendo de cada una de sus implementaciones posteriores.
 	 */
-	public abstract float calcularNomina() throws EmpleadoException;
+	public abstract float calcularSalario() throws EmpleadoException;
 
 	public String getIdentificador() {
 		return identificador;
