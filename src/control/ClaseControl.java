@@ -83,16 +83,4 @@ public class ClaseControl {
 		return empleadoBuscado;
 	}
 	
-	
-
-	public static void main(String[] args) {
-				EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
-				EntityManager gestorBD = fabrica.createEntityManager();
-	
-				Empleado empleadoBuscado = gestorBD.find(Empleado.class, "123456789");
-				System.out.println(empleadoBuscado.getNombre());
-				gestorBD.close();
-
-	}
-
 }
