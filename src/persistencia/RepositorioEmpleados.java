@@ -38,13 +38,6 @@ public interface RepositorioEmpleados {
 	 */
 	public abstract Empleado buscarEmpleado(String identificador);
 
-	/**
-	 * Elimina toda la informacion del barco en el repositorio
-	 * @param empleado el objeto empleado que se desea borrar,
-	 * 			debe ser diferente de null
-	 * @return un valor booleano indicando si se pudo borrar en el repositorio o no
-	 * 		(por alguna restricción en el repositorio, no por reglas del negocio)
-	 */
-	public abstract boolean borrarEmpleado(Empleado empleado);
+
 	
 }

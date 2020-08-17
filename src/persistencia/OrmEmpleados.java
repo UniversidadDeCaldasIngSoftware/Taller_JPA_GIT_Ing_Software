@@ -27,7 +27,7 @@ import entidades.Empleado;
 
 public class OrmEmpleados implements RepositorioEmpleados {
 	
-	private EntityManagerFactory fabrica;
+	private EntityManager gestorBd;
 	
 	/** 
 	 * La unidad de persistencia ("Persistence unit") llamada Empleados
@@ -35,27 +35,24 @@ public class OrmEmpleados implements RepositorioEmpleados {
 	 * en la carpeta META-INF
 	 */
 	public OrmEmpleados() {
-		fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
+		EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("Taller_JPA_GIT");
+		gestorBd = fabrica.createEntityManager();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Empleado> consultarEmpleados() {
-		EntityManager gestorBd = fabrica.createEntityManager();
 		Query query = gestorBd.createQuery("select a from Empleado a");
 		List<Empleado> empleados = query.getResultList();
-		gestorBd.close();
 		return empleados;
 	}
 
 	@Override
 	public boolean adicionarEmpleado(Empleado empleado) {
 		try	{
-			EntityManager gestorBd = fabrica.createEntityManager();
 			gestorBd.getTransaction().begin();	
 			gestorBd.persist(empleado);
 			gestorBd.getTransaction().commit();
-			gestorBd.close();
 		}
 		catch (Exception errorCrear)	{
 			return false;
@@ -65,29 +62,16 @@ public class OrmEmpleados implements RepositorioEmpleados {
 
 	@Override
 	public Empleado buscarEmpleado(String identificador) {
-		EntityManager gestorBd = fabrica.createEntityManager();
 		Empleado empleado = gestorBd.find(Empleado.class, identificador);
-		gestorBd.close();
 		return empleado;
 	}
 
+	
+	/**
+	 * Cierra el EntitiyManager cuando se vaya a destruir este objeto
+	 */
 	@Override
-	public boolean borrarEmpleado(Empleado empleado) {
-		try	{
-			EntityManager gestorBd = fabrica.createEntityManager();
-			gestorBd.getTransaction().begin();
-			
-			// Primero se busca el barco para "enlazarlo" con la base de datos
-			// También se puede usar la instrucción: gestorBd.merge(barco);
-			empleado = gestorBd.find(Empleado.class, empleado.getIdentificador());
-			
-			gestorBd.remove(empleado);
-			gestorBd.getTransaction().commit();
-			gestorBd.close();
-		}
-		catch (Exception errorBorrar)	{
-			return false;
-		}
-		return true;
+	protected void finalize() {
+		gestorBd.close();
 	}
 }
