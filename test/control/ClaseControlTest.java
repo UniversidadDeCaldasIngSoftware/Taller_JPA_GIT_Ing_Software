@@ -2,10 +2,6 @@ package control;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import org.junit.jupiter.api.Test;
 
 import entidades.Empleado;
@@ -19,48 +15,54 @@ import entidades.Empleado;
 class ClaseControlTest {
 
 	/**
-	 * Test que verifica que el empleado inexistente que se compara en este caso, el que
-	 * tiene como identificador el numero 15 sea inexistente y por ende debe lanzar
-	 * excepcion
+	 * Se verifica que lanza una exeptcion cuando se pide el salario a un  empelado inexistente
 	 * @throws EmpleadoException: la cual indica que el empleado no existe
 	 */
 	
 	@Test
-	void calcularSinEmpleado() throws EmpleadoException{
+	void calcularSalarioSinEmpleado() {
 		ClaseControl control = new ClaseControl();
 		assertThrows(Exception.class, ()-> control.calcularSalarioEmpleado("15"));
 	}
 	
+	/**
+	 * Calcula la nomina cuando no se tiene ningun empleado en la base de datos
+	 */
 	@Test
 	void calcularNominaSinEmpleado () throws EmpleadoException {
 	ClaseControl control = new ClaseControl();
 	double nomina = control.calcularNomina();
 	double nominaEsperada = 0.0;
 	assertEquals(nominaEsperada,nomina);
-	System.out.println("sin empleado: " + nomina);
 	}
 		
 	/**
-	 * Consulta en la cual se crean los 3 tipos de empleados y se ingresan cada
-	 * uno respectivamente en la base de datos, teniendo como objetivo que los 
-	 * 3 haya ingresado de la manera adecuada. Se realiza un assertEquals para
-	 * verificar que el nombre de los empleados creados anteriormente sea el nombre
-	 * obtenido de su respectivo identificador
+	 * Crea tres empleados y los agrega a la base de datos, luego se extraen de la base
+	 * y se comprueba la información de estos.
 	 */
 	
 	@Test
-	void consultaTipoEmpleados () {
+	void crearEmpleadosDeCadaTipo () {
 	ClaseControl control = new ClaseControl();
-	Empleado empleadoBuscado1 = control.buscarEmpleado("123456789");
-	Empleado empleadoBuscado2 = control.buscarEmpleado("1");
-	Empleado empleadoBuscado3 = control.buscarEmpleado("2");
+	try {
+		control.adicionarEmpleado('A', "Juan Paz", "1", 0, 0, 150000, 0, 0);
+		control.adicionarEmpleado('C', "Cristian Guerrero", "2", 0, 0, 0, 100000, 300000);
+		control.adicionarEmpleado('H', "Andres Castrillon", "3", 5000, 59, 0, 0, 0);
+	} catch (EmpleadoException e) {
+		e.printStackTrace();
+	}
+	Empleado empleadoBuscado1 = control.buscarEmpleado("1");
+	Empleado empleadoBuscado2 = control.buscarEmpleado("2");
+	Empleado empleadoBuscado3 = control.buscarEmpleado("3");
 	assertEquals("Juan Paz", empleadoBuscado1.getNombre());
 	assertEquals("Cristian Guerrero", empleadoBuscado2.getNombre());
 	assertEquals("Andres Castrillon", empleadoBuscado3.getNombre());
 	}
 	
+	
+	
 	/**
-	 * Pruba para calcula la nomina que se debe pagar esa semana
+	 * Prueba para calcula la nomina que se debe pagar esa semana cuando hay empleados en la base de datos
 	 * @throws EmpleadoException 
 	 */
 	
@@ -68,7 +70,8 @@ class ClaseControlTest {
 	void calcularNomina () throws EmpleadoException {
 	ClaseControl control = new ClaseControl();
 	double nomina = control.calcularNomina();
-	System.out.println(nomina);
+	double nominaEsperada = 760000;
+	assertEquals(nominaEsperada,nomina);
 	}
 	
 	
@@ -76,14 +79,12 @@ class ClaseControlTest {
 	 * prueba para calcular el salario de un empleado especificado
 	 * @throws EmpleadoException 
 	 */
-	
+
 	@Test
 	void calcularSalarioDeUnEmpleado () throws EmpleadoException {
 	ClaseControl control = new ClaseControl();
-	float salario = control.calcularSalarioEmpleado("123456789");
-	float salarioEsperado = (float) 10000000.0;
-	System.out.println(control.calcularSalarioEmpleado("1"));
-	System.out.println(control.calcularSalarioEmpleado("2"));
+	float salario = control.calcularSalarioEmpleado("1");
+	float salarioEsperado = (float) 150000.0;
 	assertEquals(salarioEsperado, salario);
 	
 	}

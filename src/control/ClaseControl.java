@@ -1,12 +1,9 @@
 package control;
 
-import java.text.DecimalFormat;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import entidades.Empleado;
@@ -50,9 +47,7 @@ public class ClaseControl {
 	 */
 	public boolean adicionarEmpleado(char tipo,String nombre, String identificador, float valorHora, int horasTrabajadas, float salarioSemanal,float salarioBaseSemanal, float totalVentasRealizadas) 
 			 throws EmpleadoException {
-				if (tipo != 'A' || tipo != 'a' || tipo != 'C' || tipo != 'c'|| tipo != 'H' || tipo != 'h') {
-					throw new EmpleadoException("El tipo de empleado no existe");
-				} else if(valorHora < 0){
+			    if(valorHora < 0){
 					throw new EmpleadoException("El valor por hora no puede ser negativo");
 				}else if(horasTrabajadas < 0){
 					throw new EmpleadoException("Las horas trabajadas no pueden ser negativas");
@@ -107,10 +102,8 @@ public class ClaseControl {
 	 */
 
 	public double calcularNomina() throws EmpleadoException {
-		double resultado, parteEntera = 0;
 		List<Empleado> listaEmpleados = repositorioEmpleados.consultarEmpleados();
-		
-		double nomina = 0;
+		double nomina = 0.0;
 		try {
 			for(int i=0; i < listaEmpleados.size(); i++) {
 				nomina += listaEmpleados.get(i).calcularSalario();
@@ -119,11 +112,8 @@ public class ClaseControl {
 			System.out.println("Ocurrio un error al calcular el salario");
 		}
 		
-        parteEntera = Math.floor(nomina);
-        nomina=(nomina-parteEntera)*Math.pow(10, 6);
-        nomina=Math.round(nomina);
-        resultado=(nomina/Math.pow(10, 6))+ parteEntera;
 		return nomina;
 	}
+	
 	
 }

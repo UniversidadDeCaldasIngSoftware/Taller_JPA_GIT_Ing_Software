@@ -3,6 +3,8 @@ package entidades;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import control.EmpleadoException;
+
 /**
  * Clase que recibe un salario semanal fijo
  * @author Cristian David Guerrero - Andres Felipe Castrillon - Juan Jose Paz
@@ -35,7 +37,7 @@ public class EmpleadoPorHoras extends Empleado {
 		
 		
 		@Override
-		public float calcularSalario() {
+		public float calcularSalario() throws EmpleadoException{
 			float total_salario = 0;
 			total_salario = this.valorHora * this.horasTrabajadas;
 			if	(this.horasTrabajadas > HORAS_BONO) {

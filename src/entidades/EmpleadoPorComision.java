@@ -3,6 +3,8 @@ package entidades;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import control.EmpleadoException;
+
 /**
  * 	Clase empleado por comision el cual tiene un salario base y ademas de esto
  *  tambien 
@@ -36,7 +38,7 @@ public class EmpleadoPorComision extends Empleado {
 	
 	
 	@Override
-	public float calcularSalario() {
+	public float calcularSalario() throws EmpleadoException {
 		return (float) (this.salarioBaseSemanal+(this.totalVentasRealizadas*0.05));
 	}
 

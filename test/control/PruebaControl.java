@@ -5,9 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import entidades.Empleado;
-import entidades.EmpleadoAsalariado;
-import entidades.EmpleadoPorComision;
-import entidades.EmpleadoPorHoras;
+
 
 public class PruebaControl {
 
@@ -19,17 +17,17 @@ public class PruebaControl {
 	
 		
 		gestorBD.getTransaction().begin();
-		Empleado empleado = control.buscarEmpleado("123456789");
+		Empleado empleado = control.buscarEmpleado("1");
 		if(!gestorBD.contains(empleado)) {
 			empleado = gestorBD.merge(empleado);
 		}
 		gestorBD.remove(empleado);
-		Empleado empleado2 = control.buscarEmpleado("1");
+		Empleado empleado2 = control.buscarEmpleado("2");
 		if(!gestorBD.contains(empleado2)) {
 			empleado2 = gestorBD.merge(empleado2);
 		}
 		gestorBD.remove(empleado2);
-		Empleado empleado3 = control.buscarEmpleado("2");
+		Empleado empleado3 = control.buscarEmpleado("3");
 		if(!gestorBD.contains(empleado3)) {
 			empleado3 = gestorBD.merge(empleado3);
 		}
